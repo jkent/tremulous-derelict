@@ -12,7 +12,7 @@ else
   INSTALL=install
 endif
 
-CC=gcc
+CC?=gcc
 Q3ASM_CFLAGS=-O2 -Wall -fno-strict-aliasing
 
 ifeq ($(PLATFORM),darwin)

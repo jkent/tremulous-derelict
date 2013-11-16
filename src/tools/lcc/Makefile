@@ -8,10 +8,10 @@ else
   E=
 endif
 
-CC=gcc
+CC?=gcc
 LCC_CFLAGS=-O2 -Wall -fno-strict-aliasing -MMD
 LDFLAGS=
-LD=gcc
+LD=$(CC)
 AR=ar
 ARFLAGS=cru
 RANLIB=ranlib
