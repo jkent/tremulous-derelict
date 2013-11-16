@@ -1511,6 +1511,15 @@ void ClientThink_real( gentity_t *ent )
 
   client->ps.gravity = g_gravity.value;
 
+  if( client->pers.bubble && client->pers.bubbleTime < level.time )
+  {
+    gentity_t *bubble;
+
+    client->pers.bubbleTime = level.time + 500;
+    bubble = G_TempEntity( client->ps.origin, EV_PLAYER_TELEPORT_OUT );
+    bubble->s.clientNum = ent->s.clientNum;
+  }
+
   if( BG_InventoryContainsUpgrade( UP_MEDKIT, client->ps.stats ) &&
       BG_UpgradeIsActive( UP_MEDKIT, client->ps.stats ) )
   {

@@ -70,6 +70,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#|IP^7] (^5time^7) (^5reason^7)"
     },
 
+    {"bubble", G_admin_bubble, "bubble",
+     "Cause bubbles to appear around a player until turned off",
+     "[^3name|slot#^7]"
+    },
+
     {"buildlog", G_admin_buildlog, "buildlog",
       "display a list of recent builds and deconstructs, optionally specifying"
       " a team",
@@ -5088,6 +5093,48 @@ qboolean G_admin_L1(gentity_t *ent, int skiparg ){
   }
  
   trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %d 1;", pids[ 0 ] ) );
+  return qtrue;
+}
+
+qboolean G_admin_bubble( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  gentity_t *vic;
+
+  if( G_SayArgc() < 2 + skiparg )
+  {
+    ADMP( "^3!bubble: ^7usage: !bubble [name|slot#]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+  if( G_ClientNumbersFromString( name, pids ) != 1 )
+  {
+    G_MatchOnePlayer( pids, err, sizeof( err ) );
+    ADMP( va( "^3!bubble: ^7%s\n", err ) );
+    return qfalse;
+  }
+  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+  {
+    ADMP( "^3!bubble: ^7sorry, but your intended victim has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+
+  vic = &g_entities[ pids[ 0 ] ];
+  if( vic->client->pers.bubble )
+    vic->client->pers.bubble = qfalse;
+  else
+  {
+    vic->client->pers.bubble = qtrue;
+    vic->client->pers.bubbleTime = level.time + 500;
+  }
+
+  AP( va( "print \"^3!bubble: ^7bubbles %s for %s^7 by %s\n\"",
+    ( vic->client->pers.bubble ) ? "enabled" : "disabled",
+    vic->client->pers.netname,
+    ( ent ) ? G_admin_adminPrintName( ent ) : "console" ) );
+
   return qtrue;
 }
 
