@@ -1366,6 +1366,8 @@ extern  vmCvar_t  g_msgTime;
 
 extern  vmCvar_t  g_buildLogMaxLength;
 
+extern  vmCvar_t  g_specNoclip;
+
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );
 int       trap_Milliseconds( void );

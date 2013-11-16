@@ -184,6 +184,8 @@ vmCvar_t  g_votableMaps;
 vmCvar_t  g_msg;
 vmCvar_t  g_msgTime;
 
+vmCvar_t  g_specNoclip;
+
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -350,6 +352,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_rankings, "g_rankings", "0", 0, 0, qfalse },
   { &g_allowShare, "g_allowShare", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
+
+  { &g_specNoclip, "g_specNoclip", "0", CVAR_ARCHIVE, 0, qtrue },
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
