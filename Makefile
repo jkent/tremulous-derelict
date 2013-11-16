@@ -1,5 +1,5 @@
 #
-# Tremulous QVM Makefile
+# Derelict QVM Makefile
 #
 # Nov '98 by Zoid <zoid@idsoftware.com>
 #
