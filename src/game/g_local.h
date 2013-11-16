@@ -950,6 +950,7 @@ qboolean  G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, floa
                           gentity_t *ignore, int mod );
 qboolean  G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius,
                                    gentity_t *ignore, int mod, int team );
+void      G_Knockback( gentity_t *targ, vec3_t dir, int knockback );
 void      body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int meansOfDeath );
 void      AddScore( gentity_t *ent, int score );
 
@@ -1360,6 +1361,9 @@ extern  vmCvar_t  g_dretchPunt;
 
 extern  vmCvar_t  g_devmapNoGod;
 extern  vmCvar_t  g_devmapNoStructDmg;
+
+extern  vmCvar_t  g_slapKnockback;
+extern  vmCvar_t  g_slapDamage;
 
 extern  vmCvar_t  g_voteMinTime;
 extern  vmCvar_t  g_mapvoteMaxTime;

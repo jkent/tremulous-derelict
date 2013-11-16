@@ -177,6 +177,9 @@ vmCvar_t  g_allowShare;
 vmCvar_t  g_devmapNoGod;
 vmCvar_t  g_devmapNoStructDmg;
 
+vmCvar_t  g_slapKnockback;
+vmCvar_t  g_slapDamage;
+
 vmCvar_t  g_voteMinTime;
 vmCvar_t  g_mapvoteMaxTime;
 vmCvar_t  g_votableMaps;
@@ -222,6 +225,9 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_friendlyFireMovementAttacks, "g_friendlyFireMovementAttacks", "1", CVAR_ARCHIVE, 0, qtrue  },
   { &g_devmapNoGod, "g_devmapNoGod", "0", CVAR_ARCHIVE, 0, qtrue  },
   { &g_devmapNoStructDmg, "g_devmapNoStructDmg", "0", CVAR_ARCHIVE, 0, qtrue  },
+
+  { &g_slapKnockback, "g_slapKnockback", "200", CVAR_ARCHIVE, 0, qfalse },
+  { &g_slapDamage, "g_slapDamage", "5", CVAR_ARCHIVE, 0, qfalse },
 
   { &g_teamAutoJoin, "g_teamAutoJoin", "0", CVAR_ARCHIVE  },
   { &g_teamForceBalance, "g_teamForceBalance", "1", CVAR_ARCHIVE  },
