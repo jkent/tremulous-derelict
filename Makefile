@@ -384,6 +384,12 @@ debug:
 release:
 	@$(MAKE) targets B=$(BR) CFLAGS="$(CFLAGS) $(RELEASE_CFLAGS)"
 
+test: debug
+	@B=$(BD) SHLIBEXT=$(SHLIBEXT) python deploy.py
+
+deploy: release
+	@B=$(BR) SHLIBEXT=$(SHLIBEXT) python deploy.py
+
 # Create the build directories and tools, print out
 # an informational message, then start building
 targets: makedirs tools
@@ -635,5 +641,5 @@ ifneq ($(strip $(D_FILES)),)
 endif
 
 .PHONY: all clean clean2 clean-debug clean-release \
-	debug default dist distclean makedirs release \
-	targets tools toolsclean
+	debug default dist distclean deploy makedirs release \
+	targets test tools toolsclean
