@@ -320,7 +320,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALIENSENSE_RANGE            1000.0f
 
-#define ALIEN_POISON_TIME           5000
+#define ALIEN_POISON_TIME           10000
 #define ALIEN_POISON_DMG            5
 #define ALIEN_POISON_DIVIDER        (1.0f/1.32f) //about 1.0/(time`th root of damage)
 
@@ -585,8 +585,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define STAMINA_STOP_RESTORE        25
 #define STAMINA_WALK_RESTORE        15
-#define STAMINA_SPRINT_TAKE         8
-#define STAMINA_LARMOUR_TAKE        4
+#define STAMINA_SPRINT_TAKE         4
+#define STAMINA_LARMOUR_TAKE        2
 
 #define HUMAN_SPAWN_REPEAT_TIME     10000
 

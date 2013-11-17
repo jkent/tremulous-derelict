@@ -377,7 +377,7 @@ static float PM_CmdScale( usercmd_t *cmd )
 
     //slow down once stamina depletes
     if( pm->ps->stats[ STAT_STAMINA ] <= -500 )
-      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 500.0f;
+      modifier *= 0.25 + ( (float)( pm->ps->stats[ STAT_STAMINA ] + 1000 ) / 666.6667f );
 
     if( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED )
     {
@@ -714,7 +714,7 @@ static qboolean PM_CheckJump( void )
 
   //TA: take some stamina off
   if( pm->ps->stats[ STAT_PTEAM ] == PTE_HUMANS )
-    pm->ps->stats[ STAT_STAMINA ] -= 500;
+    pm->ps->stats[ STAT_STAMINA ] -= 150;
 
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
 

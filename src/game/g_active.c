@@ -608,8 +608,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
       else
         client->ps.stats[ STAT_STAMINA ] -= STAMINA_SPRINT_TAKE;
 
-      if( client->ps.stats[ STAT_STAMINA ] < -MAX_STAMINA )
-        client->ps.stats[ STAT_STAMINA ] = -MAX_STAMINA;
+      if( client->ps.stats[ STAT_STAMINA ] < -( MAX_STAMINA - 50 ) )
+        client->ps.stats[ STAT_STAMINA ] = -( MAX_STAMINA - 50 );
     }
 
     if( walking || crouched )
