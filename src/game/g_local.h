@@ -418,6 +418,9 @@ typedef struct
   qboolean            bubble;
   int                 bubbleTime;
 
+  qboolean            grabbed;
+  gentity_t           *grabber;
+
   qboolean            firstConnect;        // This is the first map since connect
   qboolean            useUnlagged;
   statsCounters_t     statscounters;

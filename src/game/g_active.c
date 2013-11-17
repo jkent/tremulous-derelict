@@ -1520,6 +1520,11 @@ void ClientThink_real( gentity_t *ent )
     bubble->s.clientNum = ent->s.clientNum;
   }
 
+  if( client->pers.grabbed ) {
+    VectorClear( ent->client->ps.velocity );
+    VectorCopy( ent->client->pers.grabber->s.origin, ent->client->ps.origin );
+  }
+
   if( BG_InventoryContainsUpgrade( UP_MEDKIT, client->ps.stats ) &&
       BG_UpgradeIsActive( UP_MEDKIT, client->ps.stats ) )
   {
