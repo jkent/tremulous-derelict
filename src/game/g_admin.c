@@ -112,6 +112,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3a|h^7]"
     },
 
+    {"get", G_admin_get, "get",
+      "Teleport a player to your location.",
+      "[^3name|slot#]"
+    },
+
     {"grab", G_admin_grab, "grab",
       "Grab a player as a spectator and make him move around.",
       "[^3name|slot#]"
@@ -5182,6 +5187,79 @@ qboolean G_admin_fireworks( gentity_t *ent, int skiparg )
         ent->use( ent, ent, ent );
     }
   }
+  return qtrue;
+}
+
+qboolean G_admin_get( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  int minargc;
+  gentity_t *vic;
+
+  if( !ent )
+  {
+    ADMP( "^3!get: ^7console cannot use this command\n" );
+    return qfalse;
+  }
+
+  if( !ent->client )
+  {
+    ADMP( "^3!get: ^7only game clients can use this command\n" );
+    return qfalse;
+  }
+
+  minargc = 2 + skiparg;
+
+  if( G_SayArgc() < minargc )
+  {
+    ADMP( "^3!get: ^7usage: !get [name|slot#]\n" );
+    return qfalse;
+  }
+  
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+
+  if( G_ClientNumbersFromString( name, pids ) != 1 )
+  {
+    G_MatchOnePlayer( pids, err, sizeof( err ) );
+    ADMP( va( "^3!get: ^7%s\n", err ) );
+    return qfalse;
+  }
+
+  vic = &g_entities[ pids[ 0 ] ];
+
+  if( !admin_higher( ent, vic ) )
+  {
+    ADMP( "^3!get: ^7sorry, but your intended victim has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+
+  if( !vic->client )
+  {
+    ADMP( "^3!get: ^7victim is not a game client\n" );
+    return qfalse;
+  }
+
+  VectorCopy( ent->s.origin, vic->client->ps.origin );
+
+  /* place teleportee above teleporter's origin if both spawned */
+  if( ent->client->sess.sessionTeam != TEAM_SPECTATOR ||
+      vic->client->sess.sessionTeam != TEAM_SPECTATOR )
+    vic->client->ps.origin[2] += ent->r.maxs[2] + -vic->r.mins[2];
+
+  vic->client->ps.eFlags ^= EF_TELEPORT_BIT;
+  G_UnlaggedClear( vic );
+  G_SetClientViewAngle( vic, ent->client->ps.viewangles );
+  BG_PlayerStateToEntityState( &vic->client->ps, &vic->s, qtrue );
+  VectorCopy( vic->client->ps.origin, vic->r.currentOrigin );
+  if( vic->client->sess.sessionTeam != TEAM_SPECTATOR )
+    trap_LinkEntity( vic );
+
+  trap_SendServerCommand( -1,
+    va( "print \"^3!get: teleported ^7%s^7 to ^7%s^7.\n\"",
+    vic->client->pers.netname, ent->client->pers.netname ) );
+
   return qtrue;
 }
 
