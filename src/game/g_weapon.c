@@ -1031,7 +1031,7 @@ void poisonCloud( gentity_t *ent )
 
     if( humanPlayer->client && humanPlayer->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
-      if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, humanPlayer->client->ps.stats ) )
+      if( BG_InventoryContainsUpgrade( UP_HELMET, humanPlayer->client->ps.stats ) )
         continue;
 
       if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, humanPlayer->client->ps.stats ) )
