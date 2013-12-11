@@ -189,6 +189,11 @@ vmCvar_t  g_msgTime;
 
 vmCvar_t  g_specNoclip;
 
+vmCvar_t  g_hitsounds;
+vmCvar_t  g_hitsoundsType;
+vmCvar_t  g_hitsoundsFriendly;
+vmCvar_t  g_hitsoundsBuildable;
+
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -360,6 +365,11 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_specNoclip, "g_specNoclip", "0", CVAR_ARCHIVE, 0, qtrue },
+
+  { &g_hitsounds, "g_hitsounds", "1", CVAR_ARCHIVE, 0, qfalse },
+  { &g_hitsoundsType, "g_hitsoundsType", "1", CVAR_ARCHIVE, 0, qfalse },
+  { &g_hitsoundsBuildable, "g_hitsoundsBuildable", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_hitsoundsFriendly, "g_hitsoundsFriendly", "0", CVAR_ARCHIVE, 0, qfalse },
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );

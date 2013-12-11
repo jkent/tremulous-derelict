@@ -1379,6 +1379,11 @@ extern  vmCvar_t  g_buildLogMaxLength;
 
 extern  vmCvar_t  g_specNoclip;
 
+extern  vmCvar_t  g_hitsounds;
+extern  vmCvar_t  g_hitsoundsType;
+extern  vmCvar_t  g_hitsoundsFriendly;
+extern  vmCvar_t  g_hitsoundsBuildable;
+
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );
 int       trap_Milliseconds( void );

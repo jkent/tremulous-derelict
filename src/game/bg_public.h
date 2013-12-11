@@ -1331,3 +1331,5 @@ void BG_ClientListParse( clientList_t *list, const char *s );
 #define FFF_ALIENS         2
 #define FFF_BUILDABLES     4
 
+#define NUM_HITSOUNDS 9
+
