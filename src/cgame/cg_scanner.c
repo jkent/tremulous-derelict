@@ -231,6 +231,8 @@ void CG_AlienSense( rectDef_t *rect )
   vec3_t  relOrigin;
   vec4_t  buildable = { 1.0f, 0.0f, 0.0f, 0.7f };
   vec4_t  client    = { 0.0f, 0.0f, 1.0f, 0.7f };
+  vec4_t  friendclient    = { 0.0f, 1.0f, 0.0f, 0.7f };
+  vec4_t  friendbuildable = { 1.0f, 1.0f, 0.0f, 0.7f };
 
   VectorCopy( entityPositions.origin, origin );
 
@@ -252,6 +254,29 @@ void CG_AlienSense( rectDef_t *rect )
 
     if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
       CG_DrawDir( rect, relOrigin, client );
+  }
+
+  if( cg_friendlyAliensense.integer > 0 )
+  {
+    //draw alien buildables
+    for( i = 0; i < entityPositions.numAlienBuildables; i++ )
+    {
+      VectorClear( relOrigin );
+      VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
+
+      if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+        CG_DrawDir( rect, relOrigin, friendbuildable );
+    }
+
+    //draw alien clients
+    for( i = 0; i < entityPositions.numAlienClients; i++ )
+    {
+      VectorClear( relOrigin );
+      VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
+
+      if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+        CG_DrawDir( rect, relOrigin, friendclient );
+    }
   }
 }
 

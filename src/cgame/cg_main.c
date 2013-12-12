@@ -244,6 +244,8 @@ vmCvar_t  cg_unlagged;
 vmCvar_t  cg_hitsounds;
 vmCvar_t  cg_hitsoundsCritical;
 
+vmCvar_t  cg_friendlyAliensense;
+
 
 typedef struct
 {
@@ -391,6 +393,7 @@ static cvarTable_t cvarTable[ ] =
 //  { &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
   { &cg_hitsounds, "cg_hitsounds", "1", CVAR_ARCHIVE},
   { &cg_hitsoundsCritical, "cg_hitsoundsCritical", "0", CVAR_ARCHIVE},
+  { &cg_friendlyAliensense, "cg_friendlyAliensense", "1", CVAR_ARCHIVE},
 };
 
 static int   cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

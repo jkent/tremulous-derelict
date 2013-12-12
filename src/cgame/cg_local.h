@@ -1539,6 +1539,8 @@ extern  vmCvar_t    cg_unlagged;
 extern  vmCvar_t    cg_hitsounds;
 extern  vmCvar_t    cg_hitsoundsCritical;
 
+extern  vmCvar_t    cg_friendlyAliensense;
+
 //
 // cg_main.c
 //
