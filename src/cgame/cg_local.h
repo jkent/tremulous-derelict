@@ -1541,6 +1541,8 @@ extern  vmCvar_t    cg_hitsoundsCritical;
 
 extern  vmCvar_t    cg_friendlyAliensense;
 
+extern  vmCvar_t    pmove_rampjump;
+
 //
 // cg_main.c
 //

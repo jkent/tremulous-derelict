@@ -194,6 +194,8 @@ vmCvar_t  g_hitsoundsType;
 vmCvar_t  g_hitsoundsFriendly;
 vmCvar_t  g_hitsoundsBuildable;
 
+vmCvar_t  pmove_rampjump;
+
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -370,6 +372,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_hitsoundsType, "g_hitsoundsType", "1", CVAR_ARCHIVE, 0, qfalse },
   { &g_hitsoundsBuildable, "g_hitsoundsBuildable", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_hitsoundsFriendly, "g_hitsoundsFriendly", "0", CVAR_ARCHIVE, 0, qfalse },
+
+  { &pmove_rampjump, "pmove_rampjump", "1", CVAR_SYSTEMINFO, 0, qtrue },
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );

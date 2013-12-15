@@ -246,6 +246,8 @@ vmCvar_t  cg_hitsoundsCritical;
 
 vmCvar_t  cg_friendlyAliensense;
 
+vmCvar_t  pmove_rampjump;
+
 
 typedef struct
 {
@@ -394,6 +396,7 @@ static cvarTable_t cvarTable[ ] =
   { &cg_hitsounds, "cg_hitsounds", "1", CVAR_ARCHIVE},
   { &cg_hitsoundsCritical, "cg_hitsoundsCritical", "0", CVAR_ARCHIVE},
   { &cg_friendlyAliensense, "cg_friendlyAliensense", "1", CVAR_ARCHIVE},
+  { &pmove_rampjump, "pmove_rampjump", "0", 0},
 };
 
 static int   cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );
