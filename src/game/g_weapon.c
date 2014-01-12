@@ -1031,17 +1031,20 @@ void poisonCloud( gentity_t *ent )
 
     if( humanPlayer->client && humanPlayer->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     {
-      if( BG_InventoryContainsUpgrade( UP_HELMET, humanPlayer->client->ps.stats ) )
-        continue;
-
-      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, humanPlayer->client->ps.stats ) )
-        continue;
-
       trap_Trace( &tr, muzzle, NULL, NULL, humanPlayer->s.origin, humanPlayer->s.number, MASK_SHOT );
 
       //can't see target from here
       if( tr.entityNum == ENTITYNUM_WORLD )
         continue;
+
+      if( BG_InventoryContainsUpgrade( UP_HELMET, humanPlayer->client->ps.stats ) ||
+          BG_InventoryContainsUpgrade( UP_BATTLESUIT, humanPlayer->client->ps.stats ) )
+      {
+        humanPlayer->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+        humanPlayer->client->lastPoisonTime = level.time;
+        humanPlayer->client->lastPoisonClient = ent;
+        continue;
+      }
 
       humanPlayer->client->ps.stats[ STAT_STATE ] |= SS_POISONCLOUDED;
       humanPlayer->client->lastPoisonCloudedTime = level.time;
