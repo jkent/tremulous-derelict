@@ -1043,13 +1043,10 @@ void poisonCloud( gentity_t *ent )
       if( tr.entityNum == ENTITYNUM_WORLD )
         continue;
 
-      if( !( humanPlayer->client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED ) )
-      {
-        humanPlayer->client->ps.stats[ STAT_STATE ] |= SS_POISONCLOUDED;
-        humanPlayer->client->lastPoisonCloudedTime = level.time;
-        humanPlayer->client->lastPoisonCloudedClient = ent;
-        trap_SendServerCommand( humanPlayer->client->ps.clientNum, "poisoncloud" );
-      }
+      humanPlayer->client->ps.stats[ STAT_STATE ] |= SS_POISONCLOUDED;
+      humanPlayer->client->lastPoisonCloudedTime = level.time;
+      humanPlayer->client->lastPoisonCloudedClient = ent;
+      trap_SendServerCommand( humanPlayer->client->ps.clientNum, "poisoncloud" );
     }
   }
   G_UnlaggedOff( );
