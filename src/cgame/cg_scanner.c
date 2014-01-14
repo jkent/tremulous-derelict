@@ -229,6 +229,7 @@ void CG_AlienSense( rectDef_t *rect )
   int     i;
   vec3_t  origin;
   vec3_t  relOrigin;
+  vec_t   distance;
   vec4_t  buildable = { 1.0f, 0.0f, 0.0f, 0.7f };
   vec4_t  client    = { 0.0f, 0.0f, 1.0f, 0.7f };
   vec4_t  friendclient    = { 0.0f, 1.0f, 0.0f, 0.7f };
@@ -242,8 +243,13 @@ void CG_AlienSense( rectDef_t *rect )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanBuildablePos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+    distance = VectorLength( relOrigin );
+    if( distance < ALIENSENSE_RANGE )
+    {
+      buildable[3] = 1 - ( distance / ALIENSENSE_RANGE );
+      buildable[3] = ( buildable[3] * 0.7 ) + 0.1;
       CG_DrawDir( rect, relOrigin, buildable );
+    }
   }
 
   //draw human clients
@@ -252,8 +258,13 @@ void CG_AlienSense( rectDef_t *rect )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanClientPos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+    distance = VectorLength( relOrigin );
+    if( distance < ALIENSENSE_RANGE )
+    {
+      client[3] = 1 - ( distance / ALIENSENSE_RANGE );
+      client[3] = ( client[3] * 0.7 ) + 0.1;
       CG_DrawDir( rect, relOrigin, client );
+    }
   }
 
   if( cg_friendlyAliensense.integer > 0 )
@@ -264,8 +275,13 @@ void CG_AlienSense( rectDef_t *rect )
       VectorClear( relOrigin );
       VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
 
-      if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+      distance = VectorLength( relOrigin );
+      if( distance < ALIENSENSE_RANGE )
+      {
+        friendbuildable[3] = 1 - ( distance / ALIENSENSE_RANGE );
+        friendbuildable[3] = ( friendbuildable[3] * 0.7 ) + 0.1;
         CG_DrawDir( rect, relOrigin, friendbuildable );
+      }
     }
 
     //draw alien clients
@@ -274,8 +290,13 @@ void CG_AlienSense( rectDef_t *rect )
       VectorClear( relOrigin );
       VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
 
-      if( VectorLength( relOrigin ) < ALIENSENSE_RANGE )
+      distance = VectorLength( relOrigin );
+      if( distance < ALIENSENSE_RANGE )
+      {
+        friendclient[3] = 1 - ( distance / ALIENSENSE_RANGE );
+        friendclient[3] = ( friendclient[3] * 0.7 ) + 0.1;
         CG_DrawDir( rect, relOrigin, friendclient );
+      }
     }
   }
 }
