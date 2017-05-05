@@ -245,26 +245,44 @@ CG_CheckLocalSounds
 */
 void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops )
 {
-  int reward;
+  int hits_delta;
+  int health_delta;
+  int i;
 
   // don't play the sounds if the player just changed teams
   if( ps->persistant[ PERS_TEAM ] != ops->persistant[ PERS_TEAM ] )
     return;
 
   // health changes of more than -1 should make pain sounds
-  if( ps->stats[ STAT_HEALTH ] < ops->stats[ STAT_HEALTH ] - 1 )
+  // and don't play hurt sound if evolving
+  health_delta = ops->stats[ STAT_HEALTH ] - ps->stats[ STAT_HEALTH ];
+  if( ( health_delta > 1 ) &&
+      ( ps->stats[ STAT_PCLASS ] == ops->stats[ STAT_PCLASS ] ) )
   {
     if( ps->stats[ STAT_HEALTH ] > 0 )
       CG_PainEvent( &cg.predictedPlayerEntity, ps->stats[ STAT_HEALTH ] );
   }
 
-
-  // if we are going into the intermission, don't start any voices
-  if( cg.intermissionStarted )
+  if( cg_hitsounds.integer <= 0 )
     return;
 
-  // reward sounds
-  reward = qfalse;
+  hits_delta = ps->persistant[ PERS_HITS ] - ops->persistant[ PERS_HITS ];
+  if( hits_delta > 0 ) {
+    i = MIN( hits_delta, NUM_HITSOUNDS ) - 1;
+    trap_S_StartLocalSound( cgs.media.hitSound[i], CHAN_LOCAL_SOUND );
+  }
+
+  if( ( health_delta > 1 ) &&
+      ( ps->stats[ STAT_PCLASS ] == ops->stats[ STAT_PCLASS ] ) )
+  {
+    if( ps->stats[ STAT_HEALTH ] > 0 )
+    {
+      int health_pct = (health_delta * 100) / ps->stats[ STAT_MAX_HEALTH ];
+      if( ( cg_hitsoundsCritical.integer > 0 ) &&
+          ( health_pct >= cg_hitsoundsCritical.integer ) )
+        trap_S_StartLocalSound( cgs.media.hitCritSound, CHAN_LOCAL_SOUND );
+    }
+  }
 }
 
 

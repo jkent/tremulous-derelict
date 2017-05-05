@@ -184,6 +184,8 @@ typedef struct
   int           pmove_fixed;
   int           pmove_msec;
 
+  int           rampjump;
+
   // callbacks to test the world
   // these will be different functions during game and cgame
   /*void    (*trace)( trace_t *results, const vec3_t start, vec3_t mins, vec3_t maxs, const vec3_t end, int passEntityNum, int contentMask );*/
@@ -1330,4 +1332,6 @@ void BG_ClientListParse( clientList_t *list, const char *s );
 #define FFF_HUMANS         1
 #define FFF_ALIENS         2
 #define FFF_BUILDABLES     4
+
+#define NUM_HITSOUNDS 9
 

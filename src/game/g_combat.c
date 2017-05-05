@@ -1034,6 +1034,50 @@ void G_InitDamageLocations( void )
 ////////TA: locdamage
 
 
+static void G_DamageHitsound( gentity_t *targ, gentity_t *attacker, int damage )
+{
+  const int hitsound_thresholds[ NUM_HITSOUNDS ] = { 0, 4, 8, 12, 25, 50, 85, 120, 165 };
+  qboolean hitsound = qfalse;
+  qboolean same_team;
+  int i;
+
+  if ( !attacker->client )
+    return;
+
+  if ( g_hitsounds.integer <= 0 )
+    return;
+
+  if ( targ->health <= 0 || damage <= 0 )
+    return;
+
+  if( ( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS ) &&
+      ( g_hitsounds.integer < 2 ) )
+    return;
+
+  same_team = ( targ->biteam == attacker->client->pers.teamSelection ) ||
+              OnSameTeam( targ, attacker );
+
+  if( ( targ->s.eType == ET_BUILDABLE ) &&
+      ( g_hitsoundsBuildable.integer <= 0 ) )
+    return;
+
+  hitsound = ( same_team && g_hitsoundsFriendly.integer ) || !same_team;
+  if( !hitsound )
+    return;
+
+  if( g_hitsoundsType.integer >= 1 )
+  {
+    for( i = NUM_HITSOUNDS - 1; i >= 0; i-- )
+      if( damage >= hitsound_thresholds[i] )
+        break;
+    attacker->client->ps.persistant[ PERS_HITS ] += i;
+    return;
+  }
+
+  attacker->client->ps.persistant[ PERS_HITS ]++;
+}
+
+
 /*
 ============
 T_Damage
@@ -1076,6 +1120,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   int     knockback;
   float damagemodifier=0.0;
   int takeNoOverkill;
+  qboolean hitsound = qfalse;
+  qboolean same_team;
 
   if( !targ->takedamage )
     return;
@@ -1245,16 +1291,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       return;
   }
 
-  // add to the attacker's hit counter
-  if( attacker->client && targ != attacker && targ->health > 0
-      && targ->s.eType != ET_MISSILE
-      && targ->s.eType != ET_GENERAL )
-  {
-    if( OnSameTeam( targ, attacker ) )
-      attacker->client->ps.persistant[ PERS_HITS ]--;
-    else
-      attacker->client->ps.persistant[ PERS_HITS ]++;
-  }
+  G_DamageHitsound( targ, attacker, damage );
 
   take = damage;
   save = 0;

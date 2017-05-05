@@ -1270,6 +1270,9 @@ typedef struct
 
   qhandle_t   buildWeaponTimerPie[ 8 ];
   qhandle_t   upgradeClassIconShader;
+
+  sfxHandle_t hitSound[ NUM_HITSOUNDS ];
+  sfxHandle_t hitCritSound;
 } cgMedia_t;
 
 typedef struct
@@ -1532,6 +1535,13 @@ extern  vmCvar_t    cg_debugRandom;
 extern  vmCvar_t    cg_optimizePrediction;
 extern  vmCvar_t    cg_projectileNudge;
 extern  vmCvar_t    cg_unlagged;
+
+extern  vmCvar_t    cg_hitsounds;
+extern  vmCvar_t    cg_hitsoundsCritical;
+
+extern  vmCvar_t    cg_friendlyAliensense;
+
+extern  vmCvar_t    pmove_rampjump;
 
 //
 // cg_main.c

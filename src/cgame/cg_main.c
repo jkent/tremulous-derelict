@@ -241,6 +241,13 @@ vmCvar_t  cg_optimizePrediction;
 vmCvar_t  cg_projectileNudge;
 vmCvar_t  cg_unlagged;
 
+vmCvar_t  cg_hitsounds;
+vmCvar_t  cg_hitsoundsCritical;
+
+vmCvar_t  cg_friendlyAliensense;
+
+vmCvar_t  pmove_rampjump;
+
 
 typedef struct
 {
@@ -384,8 +391,12 @@ static cvarTable_t cvarTable[ ] =
   { &cg_oldRail, "cg_oldRail", "1", CVAR_ARCHIVE},
   { &cg_oldRocket, "cg_oldRocket", "1", CVAR_ARCHIVE},
   { &cg_oldPlasma, "cg_oldPlasma", "1", CVAR_ARCHIVE},
-  { &cg_trueLightning, "cg_trueLightning", "0.0", CVAR_ARCHIVE}
+  { &cg_trueLightning, "cg_trueLightning", "0.0", CVAR_ARCHIVE},
 //  { &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
+  { &cg_hitsounds, "cg_hitsounds", "1", CVAR_ARCHIVE},
+  { &cg_hitsoundsCritical, "cg_hitsoundsCritical", "0", CVAR_ARCHIVE},
+  { &cg_friendlyAliensense, "cg_friendlyAliensense", "1", CVAR_ARCHIVE},
+  { &pmove_rampjump, "pmove_rampjump", "0", 0},
 };
 
 static int   cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );
@@ -721,6 +732,11 @@ static void CG_RegisterSounds( void )
   cgs.media.buildableRepairedSound  = trap_S_RegisterSound( "sound/buildables/human/repaired.wav", qfalse );
 
   cgs.media.lCannonWarningSound     = trap_S_RegisterSound( "models/weapons/lcannon/warning.wav", qfalse );
+
+  for( i = 0; i < NUM_HITSOUNDS; i++ )
+    cgs.media.hitSound[i] = trap_S_RegisterSound(
+        va( "sound/feedback/hit%d.wav", i ), qfalse );
+  cgs.media.hitCritSound = trap_S_RegisterSound( "sound/feedback/hitcrit.wav", qfalse );
 }
 
 
